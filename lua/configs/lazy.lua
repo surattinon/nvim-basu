@@ -9,6 +9,7 @@ return {
       loaded = "",
       not_loaded = "",
     },
+    backdrop = 70,
   },
 
   performance = {
@@ -40,7 +41,7 @@ return {
         "optwin",
         "compiler",
         "bugreport",
-        "ftplugin",
+        -- "ftplugin",
       },
     },
   },

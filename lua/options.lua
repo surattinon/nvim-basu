@@ -1,6 +1,21 @@
 require "nvchad.options"
+local opt = vim.opt
 
--- add yours here!
+-- Number setup --
+opt.number = true
+opt.relativenumber = true
+opt.cursorline = true
+opt.cursorlineopt = "number"
+opt.cmdheight = 0
 
--- local o = vim.o
--- o.cursorlineopt ='both' -- to enable cursorline!
+-- Minimal number of screen lines to keep above and below the cursor --
+vim.opt.scrolloff = 10
+
+-- Highlight when yanking text --
+vim.api.nvim_create_autocmd("TextYankPost", {
+  desc = "Highlight when yanking (copying) text",
+  group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
+  callback = function()
+    vim.highlight.on_yank()
+  end,
+})
