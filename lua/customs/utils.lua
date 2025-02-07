@@ -49,7 +49,7 @@ vim.api.nvim_create_autocmd("FileType", {
     local backdropName = "MasonBackdrop"
     local masonBufnr = ctx.buf
 
-    local masonZindex = 50
+    local masonZindex = 40
 
     local backdropBufnr = vim.api.nvim_create_buf(false, true)
     local winnr = vim.api.nvim_open_win(backdropBufnr, false, {
