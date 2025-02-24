@@ -4,7 +4,16 @@ require("nvchad.configs.lspconfig").defaults()
 local lspconfig = require "lspconfig"
 
 -- EXAMPLE
-local servers = { "html", "cssls", "ltex", "ts_ls", "ccls" }
+local servers = {
+  "html",
+  "cssls",
+  "clangd",
+  "ts_ls",
+  -- "ccls",
+  "tailwindcss",
+  "grammarly",
+  "pyright"
+}
 local nvlsp = require "nvchad.configs.lspconfig"
 
 -- lsps with default config
@@ -16,18 +25,8 @@ for _, lsp in ipairs(servers) do
   }
 end
 
-lspconfig.ts_ls.setup {
-  on_attach = nvlsp.on_attach,
-  on_init = nvlsp.on_init,
-  capabilities = nvlsp.capabilities,
-}
-
 lspconfig.tailwindcss.setup {
-  on_attach = nvlsp.on_attach,
-  on_init = nvlsp.on_init,
-  capabilities = nvlsp.capabilities,
   filetypes = {
-    "markdown",
     "javascript",
     "javascriptreact",
     "typescriptreact",
@@ -55,14 +54,21 @@ lspconfig.tailwindcss.setup {
   },
 }
 
-lspconfig.ccls.setup {
-  init_options = {
-    compilationDatabaseDirectory = "build",
-    index = {
-      threads = 0,
-    },
-    clang = {
-      excludeArgs = { "-frounding-math" },
-    },
-  },
+-- lspconfig.ccls.setup {
+--   init_options = {
+--     compilationDatabaseDirectory = "build",
+--     index = {
+--       threads = 0,
+--     },
+--     cache = {
+--       directory = ".ccls-cache",
+--     },
+--     clang = {
+--       excludeArgs = { "-frounding-math" },
+--     },
+--   },
+-- }
+
+lspconfig.grammarly.setup {
+  filetypes = { "markdown" },
 }

@@ -5,11 +5,15 @@ local opt = vim.opt
 opt.number = true
 opt.relativenumber = true
 opt.cursorline = true
-opt.cursorlineopt = "number"
+opt.cursorlineopt = "line"
 opt.cmdheight = 0
 
 -- Minimal number of screen lines to keep above and below the cursor --
-vim.opt.scrolloff = 10
+opt.scrolloff = 10
+
+-- NVIM builtin spelling --
+opt.spelllang = "en_us"
+opt.spell = true
 
 -- Highlight when yanking text --
 vim.api.nvim_create_autocmd("TextYankPost", {

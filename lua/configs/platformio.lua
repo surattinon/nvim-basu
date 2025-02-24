@@ -1,3 +1,3 @@
 require("platformio").setup {
-  lsp = "ccls",
+  lsp = "clangd",
 }

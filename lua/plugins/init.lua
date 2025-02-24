@@ -116,4 +116,89 @@ return {
     ---@type render.md.UserConfig
     opts = require "configs.render-markdown",
   },
+  {
+    "yetone/avante.nvim",
+    event = "VeryLazy",
+    lazy = true,
+    version = false, -- Set this to "*" to always pull the latest release version, or set it to false to update to the latest code changes.
+    opts = require "configs.avante",
+    build = "make",
+    dependencies = {
+      "stevearc/dressing.nvim",
+      "nvim-lua/plenary.nvim",
+      "MunifTanjim/nui.nvim",
+      --- The below dependencies are optional,
+      {
+        -- support for image pasting
+        "HakonHarnes/img-clip.nvim",
+        event = "VeryLazy",
+        opts = {
+          -- recommended settings
+          default = {
+            embed_image_as_base64 = false,
+            prompt_for_file_name = false,
+            drag_and_drop = {
+              insert_mode = true,
+            },
+            -- required for Windows users
+            use_absolute_path = true,
+          },
+        },
+      },
+      {
+        -- Make sure to set this up properly if you have lazy=true
+        "MeanderingProgrammer/render-markdown.nvim",
+        opts = {
+          file_types = { "markdown", "Avante" },
+        },
+        ft = { "markdown", "Avante" },
+      },
+    },
+  },
+  ---@module "neominimap.config.meta"
+  {
+    "Isrothy/neominimap.nvim",
+    version = "v3.*.*",
+    enabled = true,
+    lazy = false, -- NOTE: NO NEED to Lazy load
+    -- Optional
+    keys = {
+      { "<leader>mm", "<cmd>Neominimap toggle<cr>", desc = "Toggle global minimap" },
+      { "<leader>mo", "<cmd>Neominimap on<cr>", desc = "Enable global minimap" },
+      { "<leader>mc", "<cmd>Neominimap off<cr>", desc = "Disable global minimap" },
+      { "<leader>mr", "<cmd>Neominimap refresh<cr>", desc = "Refresh global minimap" },
+
+      { "<leader>mwt", "<cmd>Neominimap winToggle<cr>", desc = "Toggle minimap for current window" },
+      { "<leader>mwr", "<cmd>Neominimap winRefresh<cr>", desc = "Refresh minimap for current window" },
+      { "<leader>mwo", "<cmd>Neominimap winOn<cr>", desc = "Enable minimap for current window" },
+      { "<leader>mwc", "<cmd>Neominimap winOff<cr>", desc = "Disable minimap for current window" },
+
+      { "<leader>mtt", "<cmd>Neominimap tabToggle<cr>", desc = "Toggle minimap for current tab" },
+      { "<leader>mtr", "<cmd>Neominimap tabRefresh<cr>", desc = "Refresh minimap for current tab" },
+      { "<leader>mto", "<cmd>Neominimap tabOn<cr>", desc = "Enable minimap for current tab" },
+      { "<leader>mtc", "<cmd>Neominimap tabOff<cr>", desc = "Disable minimap for current tab" },
+
+      { "<leader>mbt", "<cmd>Neominimap bufToggle<cr>", desc = "Toggle minimap for current buffer" },
+      { "<leader>mbr", "<cmd>Neominimap bufRefresh<cr>", desc = "Refresh minimap for current buffer" },
+      { "<leader>mbo", "<cmd>Neominimap bufOn<cr>", desc = "Enable minimap for current buffer" },
+      { "<leader>mbc", "<cmd>Neominimap bufOff<cr>", desc = "Disable minimap for current buffer" },
+
+      { "<leader>mf", "<cmd>Neominimap focus<cr>", desc = "Focus on minimap" },
+      { "<leader>mu", "<cmd>Neominimap unfocus<cr>", desc = "Unfocus minimap" },
+      { "<leader>ms", "<cmd>Neominimap toggleFocus<cr>", desc = "Switch focus on minimap" },
+    },
+    init = function()
+      ---@type Neominimap.UserConfig
+      vim.g.neominimap = {
+        auto_enable = false,
+        layout = "split",
+        split = {
+          minimap_width = 15, ---@type integer
+          fix_width = false, ---@type boolean
+          direction = "right", ---@type Neominimap.Config.SplitDirection
+          close_if_last_window = false, ---@type boolean
+        },
+      }
+    end,
+  },
 }
