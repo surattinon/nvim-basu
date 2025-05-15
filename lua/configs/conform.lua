@@ -6,6 +6,8 @@ local options = {
     bash = { "beautysh" },
     python = { "black" },
     clang = { "clang-format" },
+    sql = { "sqlfmt" },
+    go = { "gofumpt" },
   },
 
   -- format_on_save = {

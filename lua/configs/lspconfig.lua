@@ -1,18 +1,19 @@
--- load defaults i.e lua_lsp
 require("nvchad.configs.lspconfig").defaults()
 
 local lspconfig = require "lspconfig"
 
--- EXAMPLE
 local servers = {
   "html",
   "cssls",
   "clangd",
   "ts_ls",
-  -- "ccls",
+  "r_language_server",
   "tailwindcss",
   "grammarly",
-  "pyright"
+  "pyright",
+  "zls",
+  "sqls",
+  "gopls",
 }
 local nvlsp = require "nvchad.configs.lspconfig"
 
@@ -54,21 +55,22 @@ lspconfig.tailwindcss.setup {
   },
 }
 
--- lspconfig.ccls.setup {
---   init_options = {
---     compilationDatabaseDirectory = "build",
---     index = {
---       threads = 0,
---     },
---     cache = {
---       directory = ".ccls-cache",
---     },
---     clang = {
---       excludeArgs = { "-frounding-math" },
---     },
---   },
--- }
-
 lspconfig.grammarly.setup {
   filetypes = { "markdown" },
+}
+
+lspconfig.sqls.setup {
+  on_attach = function(client, bufnr)
+    require("sqls").on_attach(client, bufnr)
+  end,
+  settings = {
+    sqls = {
+      connections = {
+        {
+          driver = "sqlite3",
+          dataSourceName = "file:/home/basu/Documents/learn-sql/chinook.db",
+        },
+      },
+    },
+  },
 }

@@ -201,4 +201,28 @@ return {
       }
     end,
   },
+  {
+    "kndndrj/nvim-dbee",
+    dependencies = {
+      "MunifTanjim/nui.nvim",
+    },
+    cmd = {
+      "Dbee",
+    },
+    build = function()
+      require("dbee").install()
+    end,
+    config = function()
+      require("dbee").setup {}
+    end,
+  },
+  {
+    "vyfor/cord.nvim",
+    event = "VeryLazy",
+    build = ":Cord update",
+    opts = {},
+  },
+  {
+    "nanotee/sqls.nvim",
+  },
 }
