@@ -1,3 +1,4 @@
 require("platformio").setup {
-  lsp = "clangd",
+  lsp = "ccls",
+  menu_key = "<leader>pi",
 }

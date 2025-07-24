@@ -8,8 +8,8 @@ M.plugins = {
 }
 
 M.base46 = {
-  theme = "catppuccin",
-
+  theme = "radium",
+  transparency = true,
   hl_override = {
     Comment = { italic = true },
     ["@comment"] = { italic = true },
@@ -34,6 +34,13 @@ M.ui = {
     -- default/round/block/arrow separators work only for default statusline theme
     -- round and block will work for minimal theme only
     separator_style = "block",
+  },
+
+  cmp = {
+    lspkind_text = true,
+    icon_left = true,
+    style = "default", -- default/flat_light/flat_dark/atom/atom_colored
+    format_colors = { lsp = true, icon = "󱓻" },
   },
 }
 

@@ -1,4 +1,9 @@
 return {
+  { import = "nvchad.blink.lazyspec" },
+  {
+    "Saghen/blink.cmp",
+    opts = require "configs.blink",
+  },
   {
     "stevearc/conform.nvim",
     event = "BufWritePre",
@@ -50,14 +55,12 @@ return {
       require "configs.tmux-nav"
     end,
   },
-
   {
     "stevearc/overseer.nvim",
     config = function()
       require "configs.overseer"
     end,
   },
-
   {
     "stevearc/oil.nvim",
     event = "VeryLazy",
@@ -69,17 +72,14 @@ return {
       require "configs.oil"
     end,
   },
-
   {
     "R-nvim/R.nvim",
     ft = "r",
-    lazy = false,
     version = "~0.1.0",
     config = function()
       require "configs.R"
     end,
   },
-
   {
     "echasnovski/mini.nvim",
     event = "VeryLazy",
@@ -87,73 +87,93 @@ return {
       require "configs.mini"
     end,
   },
-
   {
     "anurag3301/nvim-platformio.lua",
+    -- cmd = { "Pioinit", "Piorun", "Piocmdh", "Piocmdf", "Piolib", "Piomon", "Piodebug", "Piodb" },
+    ft = { "cpp", "c" },
     dependencies = {
-      { "akinsho/nvim-toggleterm.lua" },
+      { "akinsho/toggleterm.nvim" },
       { "nvim-telescope/telescope.nvim" },
+      { "nvim-telescope/telescope-ui-select.nvim" },
       { "nvim-lua/plenary.nvim" },
+      {
+        -- WhichKey helps you remember your Neovim keymaps,
+        -- by showing available keybindings in a popup as you type.
+        "folke/which-key.nvim",
+        opts = {
+          preset = "helix", --'modern', --"classic", --
+          sort = { "order", "group", "manual", "mod" },
+        },
+      },
     },
-    cmd = {
-      "Pioinit",
-      "Piorun",
-      "Piocmd",
-      "Piolib",
-      "Piomon",
-      "Piodebug",
-      "Piodb",
-    },
+
     config = function()
       require "configs.platformio"
     end,
   },
+  -- {
+  --   "MeanderingProgrammer/render-markdown.nvim",
+  --   event = "VeryLazy",
+  --   dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-tree/nvim-web-devicons" },
+  --   ---@module 'render-markdown'
+  --   ---@type render.md.UserConfig
+  --   opts = require "configs.render-markdown",
+  -- },
+  -- {
+  --   "yetone/avante.nvim",
+  --   event = "VeryLazy",
+  --   lazy = true,
+  --   version = false, -- Set this to "*" to always pull the latest release version, or set it to false to update to the latest code changes.
+  --   opts = require "configs.avante",
+  --   build = "make",
+  --   dependencies = {
+  --     "stevearc/dressing.nvim",
+  --     "nvim-lua/plenary.nvim",
+  --     "MunifTanjim/nui.nvim",
+  --     --- The below dependencies are optional,
+  --     {
+  --       -- support for image pasting
+  --       "HakonHarnes/img-clip.nvim",
+  --       event = "VeryLazy",
+  --       opts = {
+  --         -- recommended settings
+  --         default = {
+  --           embed_image_as_base64 = false,
+  --           prompt_for_file_name = false,
+  --           drag_and_drop = {
+  --             insert_mode = true,
+  --           },
+  --           -- required for Windows users
+  --           use_absolute_path = true,
+  --         },
+  --       },
+  --     },
+  --   },
+  -- },
   {
-    "MeanderingProgrammer/render-markdown.nvim",
-    event = "VeryLazy",
-    dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-tree/nvim-web-devicons" },
-    ---@module 'render-markdown'
-    ---@type render.md.UserConfig
-    opts = require "configs.render-markdown",
-  },
-  {
-    "yetone/avante.nvim",
-    event = "VeryLazy",
-    lazy = true,
-    version = false, -- Set this to "*" to always pull the latest release version, or set it to false to update to the latest code changes.
-    opts = require "configs.avante",
-    build = "make",
+    "NickvanDyke/opencode.nvim",
     dependencies = {
-      "stevearc/dressing.nvim",
-      "nvim-lua/plenary.nvim",
-      "MunifTanjim/nui.nvim",
-      --- The below dependencies are optional,
-      {
-        -- support for image pasting
-        "HakonHarnes/img-clip.nvim",
-        event = "VeryLazy",
-        opts = {
-          -- recommended settings
-          default = {
-            embed_image_as_base64 = false,
-            prompt_for_file_name = false,
-            drag_and_drop = {
-              insert_mode = true,
-            },
-            -- required for Windows users
-            use_absolute_path = true,
-          },
-        },
-      },
-      {
-        -- Make sure to set this up properly if you have lazy=true
-        "MeanderingProgrammer/render-markdown.nvim",
-        opts = {
-          file_types = { "markdown", "Avante" },
-        },
-        ft = { "markdown", "Avante" },
-      },
+      "folke/snacks.nvim",
     },
+    ---@type opencode.Config
+    opts = {
+      -- Your configuration, if any
+    },
+  -- stylua: ignore
+  keys = {
+    -- opencode.nvim exposes a general, flexible API — customize it to your workflow!
+    -- But here are some examples to get you started :)
+    { '<leader>ot', function() require('opencode').toggle() end, desc = 'Toggle opencode', },
+    { '<leader>oa', function() require('opencode').ask() end, desc = 'Ask opencode', mode = { 'n', 'v' }, },
+    { '<leader>oA', function() require('opencode').ask('@file ') end, desc = 'Ask opencode about current file', mode = { 'n', 'v' }, },
+    { '<leader>on', function() require('opencode').command('/new') end, desc = 'New session', },
+    { '<leader>oe', function() require('opencode').prompt('Explain @cursor and its context') end, desc = 'Explain code near cursor' },
+    { '<leader>or', function() require('opencode').prompt('Review @file for correctness and readability') end, desc = 'Review file', },
+    { '<leader>of', function() require('opencode').prompt('Fix these @diagnostics') end, desc = 'Fix errors', },
+    { '<leader>oo', function() require('opencode').prompt('Optimize @selection for performance and readability') end, desc = 'Optimize selection', mode = 'v', },
+    { '<leader>od', function() require('opencode').prompt('Add documentation comments for @selection') end, desc = 'Document selection', mode = 'v', },
+    { '<leader>ot', function() require('opencode').prompt('Add tests for @selection') end, desc = 'Test selection', mode = 'v', },
+  },
   },
   ---@module "neominimap.config.meta"
   {
@@ -163,29 +183,34 @@ return {
     lazy = false, -- NOTE: NO NEED to Lazy load
     -- Optional
     keys = {
-      { "<leader>mm", "<cmd>Neominimap toggle<cr>", desc = "Toggle global minimap" },
-      { "<leader>mo", "<cmd>Neominimap on<cr>", desc = "Enable global minimap" },
-      { "<leader>mc", "<cmd>Neominimap off<cr>", desc = "Disable global minimap" },
-      { "<leader>mr", "<cmd>Neominimap refresh<cr>", desc = "Refresh global minimap" },
+      -- Global Minimap Controls
+      { "<leader>nm", "<cmd>Neominimap Toggle<cr>", desc = "Toggle global minimap" },
+      { "<leader>no", "<cmd>Neominimap Enable<cr>", desc = "Enable global minimap" },
+      { "<leader>nc", "<cmd>Neominimap Disable<cr>", desc = "Disable global minimap" },
+      { "<leader>nr", "<cmd>Neominimap Refresh<cr>", desc = "Refresh global minimap" },
 
-      { "<leader>mwt", "<cmd>Neominimap winToggle<cr>", desc = "Toggle minimap for current window" },
-      { "<leader>mwr", "<cmd>Neominimap winRefresh<cr>", desc = "Refresh minimap for current window" },
-      { "<leader>mwo", "<cmd>Neominimap winOn<cr>", desc = "Enable minimap for current window" },
-      { "<leader>mwc", "<cmd>Neominimap winOff<cr>", desc = "Disable minimap for current window" },
+      -- Window-Specific Minimap Controls
+      { "<leader>nwt", "<cmd>Neominimap WinToggle<cr>", desc = "Toggle minimap for current window" },
+      { "<leader>nwr", "<cmd>Neominimap WinRefresh<cr>", desc = "Refresh minimap for current window" },
+      { "<leader>nwo", "<cmd>Neominimap WinEnable<cr>", desc = "Enable minimap for current window" },
+      { "<leader>nwc", "<cmd>Neominimap WinDisable<cr>", desc = "Disable minimap for current window" },
 
-      { "<leader>mtt", "<cmd>Neominimap tabToggle<cr>", desc = "Toggle minimap for current tab" },
-      { "<leader>mtr", "<cmd>Neominimap tabRefresh<cr>", desc = "Refresh minimap for current tab" },
-      { "<leader>mto", "<cmd>Neominimap tabOn<cr>", desc = "Enable minimap for current tab" },
-      { "<leader>mtc", "<cmd>Neominimap tabOff<cr>", desc = "Disable minimap for current tab" },
+      -- Tab-Specific Minimap Controls
+      { "<leader>ntt", "<cmd>Neominimap TabToggle<cr>", desc = "Toggle minimap for current tab" },
+      { "<leader>ntr", "<cmd>Neominimap TabRefresh<cr>", desc = "Refresh minimap for current tab" },
+      { "<leader>nto", "<cmd>Neominimap TabEnable<cr>", desc = "Enable minimap for current tab" },
+      { "<leader>ntc", "<cmd>Neominimap TabDisable<cr>", desc = "Disable minimap for current tab" },
 
-      { "<leader>mbt", "<cmd>Neominimap bufToggle<cr>", desc = "Toggle minimap for current buffer" },
-      { "<leader>mbr", "<cmd>Neominimap bufRefresh<cr>", desc = "Refresh minimap for current buffer" },
-      { "<leader>mbo", "<cmd>Neominimap bufOn<cr>", desc = "Enable minimap for current buffer" },
-      { "<leader>mbc", "<cmd>Neominimap bufOff<cr>", desc = "Disable minimap for current buffer" },
+      -- Buffer-Specific Minimap Controls
+      { "<leader>nbt", "<cmd>Neominimap BufToggle<cr>", desc = "Toggle minimap for current buffer" },
+      { "<leader>nbr", "<cmd>Neominimap BufRefresh<cr>", desc = "Refresh minimap for current buffer" },
+      { "<leader>nbo", "<cmd>Neominimap BufEnable<cr>", desc = "Enable minimap for current buffer" },
+      { "<leader>nbc", "<cmd>Neominimap BufDisable<cr>", desc = "Disable minimap for current buffer" },
 
-      { "<leader>mf", "<cmd>Neominimap focus<cr>", desc = "Focus on minimap" },
-      { "<leader>mu", "<cmd>Neominimap unfocus<cr>", desc = "Unfocus minimap" },
-      { "<leader>ms", "<cmd>Neominimap toggleFocus<cr>", desc = "Switch focus on minimap" },
+      ---Focus Controls
+      { "<leader>nf", "<cmd>Neominimap Focus<cr>", desc = "Focus on minimap" },
+      { "<leader>nu", "<cmd>Neominimap Unfocus<cr>", desc = "Unfocus minimap" },
+      { "<leader>ns", "<cmd>Neominimap ToggleFocus<cr>", desc = "Switch focus on minimap" },
     },
     init = function()
       ---@type Neominimap.UserConfig
@@ -224,5 +249,76 @@ return {
   },
   {
     "nanotee/sqls.nvim",
+  },
+  {
+    "windwp/nvim-ts-autotag",
+    event = "VeryLazy",
+    config = function()
+      require("nvim-ts-autotag").setup {
+        opts = {
+          -- Defaults
+          enable_close = true, -- Auto close tags
+          enable_rename = true, -- Auto rename pairs of tags
+          enable_close_on_slash = false, -- Auto close on trailing </
+        },
+        -- Also override individual filetype configs, these take priority.
+        -- Empty by default, useful if one of the "opts" global settings
+        -- doesn't work well in a specific filetype
+        -- per_filetype = {
+        --   ["html"] = {
+        --     enable_close = false,
+        --   },
+        -- },
+      }
+    end,
+  },
+  {
+    "mfussenegger/nvim-dap",
+    event = "BufReadPre",
+    -- NOTE: And you can specify dependencies as well
+    dependencies = {
+      -- Creates a beautiful debugger UI
+      "rcarriga/nvim-dap-ui",
+
+      -- Required dependency for nvim-dap-ui
+      "nvim-neotest/nvim-nio",
+
+      -- Installs the debug adapters for you
+      "williamboman/mason.nvim",
+      "jay-babu/mason-nvim-dap.nvim",
+
+      -- NOTE: debugger repos here
+      "leoluz/nvim-dap-go",
+    },
+    config = function()
+      require "configs.dap"
+    end,
+  },
+  {
+    "HiPhish/rainbow-delimiters.nvim",
+    event = "VeryLazy",
+    config = function()
+      require("rainbow-delimiters.setup").setup {}
+    end,
+  },
+  {
+    "OXY2DEV/markview.nvim",
+    lazy = false,
+    config = function()
+      local presets = require "markview.presets"
+      require("markview").setup {
+        markdown = {
+          headings = presets.headings.glow,
+          horizontal_rules = presets.horizontal_rules.thick,
+          tables = presets.tables.rounded,
+        },
+        experimental = { check_rtp = false },
+      }
+    end,
+  },
+  {
+    "shortcuts/no-neck-pain.nvim",
+    event = "VeryLazy",
+    version = "*",
   },
 }

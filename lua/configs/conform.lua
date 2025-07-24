@@ -2,12 +2,16 @@ local options = {
   formatters_by_ft = {
     lua = { "stylua" },
     css = { "prettier" },
-    html = { "prettier" },
+    html = { "prettierd" },
+    php = { "prettierd" },
     bash = { "beautysh" },
     python = { "black" },
     clang = { "clang-format" },
-    sql = { "sqlfmt" },
-    go = { "gofumpt" },
+    sql = { "sleek" },
+    go = { "gofumpt", "goimports" },
+    nix = { "nixfmt" },
+    json = { "jq" },
+    markdown = { "mdformat" }
   },
 
   -- format_on_save = {

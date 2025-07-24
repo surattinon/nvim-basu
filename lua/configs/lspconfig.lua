@@ -5,7 +5,7 @@ local lspconfig = require "lspconfig"
 local servers = {
   "html",
   "cssls",
-  "clangd",
+  -- "clangd",
   "ts_ls",
   "r_language_server",
   "tailwindcss",
@@ -14,6 +14,10 @@ local servers = {
   "zls",
   "sqls",
   "gopls",
+  "stimulus_ls",
+  "phpactor",
+  "jsonls",
+  "marksman",
 }
 local nvlsp = require "nvchad.configs.lspconfig"
 
@@ -25,6 +29,14 @@ for _, lsp in ipairs(servers) do
     capabilities = nvlsp.capabilities,
   }
 end
+
+lspconfig.phpactor.setup {
+  filetypes = { "php", "html" },
+}
+
+lspconfig.html.setup {
+  filetypes = { "php", "html" },
+}
 
 lspconfig.tailwindcss.setup {
   filetypes = {
@@ -71,6 +83,18 @@ lspconfig.sqls.setup {
           dataSourceName = "file:/home/basu/Documents/learn-sql/chinook.db",
         },
       },
+    },
+  },
+}
+
+lspconfig.ccls.setup {
+  init_options = {
+    compilationDatabaseDirectory = "build",
+    index = {
+      threads = 0,
+    },
+    clang = {
+      excludeArgs = { "-frounding-math" },
     },
   },
 }
