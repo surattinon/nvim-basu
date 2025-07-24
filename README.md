@@ -9,8 +9,10 @@ Neovim configuration focuses on startup speed, currently below **40ms** (dashboa
 
 ```bash
 mv ~/.config/nvim ~/.config/nvim.bak && rm -r ~/.local/share/nvim
+```
 
-- Clone this repository
+**Clone this repository**
+
 ```bash
 git clone https://github.com/surattinon/nvim-basu ~/.config/nvim
-
+```
